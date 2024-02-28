@@ -9,7 +9,6 @@ export function Guesses({ nameA, nameB }) {
 
   // create listener for correct and wrong events
   React.useEffect(() => {
-    console.log('useEffect')
     const correctListener = event => {
       console.log('correct', event.detail)
     }

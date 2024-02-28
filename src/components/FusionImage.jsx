@@ -9,6 +9,8 @@ const handleImageLoad = async event => {
   const image = event.target
   const color = colorThief.getColor(image)
 
+  console.log('color', color)
+
   const { h, s, l } = rgbToHsl(...color)
   const foreground = l < 0.5 ? `210 40% 98%` : `222.2 47.4% 11.2%`
 
