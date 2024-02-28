@@ -76,10 +76,10 @@
   }
 }
 
-/* .fade-up {
+.fade-up {
   filter: brightness(100%);
   animation: fadeIn 1s ease-in;
-} */
+}
 
 @keyframes fadeIn {
   from {
