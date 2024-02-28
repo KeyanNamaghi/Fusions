@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises'
 
 export const gameNumber = () => {
-  const startDate = new Date('2024-02-21')
+  const startDate = new Date('2024-02-28')
   const currentDate = new Date()
   const timeDifference = currentDate - startDate
   return Math.floor(timeDifference / (1000 * 60 * 60 * 24))
