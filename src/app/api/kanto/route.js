@@ -162,6 +162,19 @@ const gen1Pokemon = [
   'Mew',
 ]
 
+const buildFusion = entry => {
+  const [fusion, artist] = entry.split(',')
+  const [idA, idB] = fusion.split('.')
+
+  const nameA = gen1Pokemon[idA]
+  const nameB = gen1Pokemon[idB]
+
+  const a = { id: idA, name: nameA }
+  const b = { id: idB, name: nameB }
+
+  return { a, b, artist }
+}
+
 export async function GET() {
   const filePath = './src/app/api/kanto/output.txt'
 
@@ -173,12 +186,13 @@ export async function GET() {
     .filter(Boolean)
 
   const game = gameNumber() % data.length
-  const daily = data[game]
-  const [fusion, artist] = daily.split(',')
-  const [a, b] = fusion.split('.')
 
-  const nameA = gen1Pokemon[a]
-  const nameB = gen1Pokemon[b]
+  const fusions = []
 
-  return Response.json({ game, a, nameA, b, nameB, artist })
+  for (let i = 0; i < 5; i++) {
+    console.log(i, data[i])
+    fusions.push(buildFusion(data[i]))
+  }
+
+  return Response.json({ game, fusions })
 }
