@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Guesses } from '@/components/Guesses'
 import { FusionImage } from '@/components/FusionImage'
 
 async function getData() {
   const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-  const res = await fetch(`${protocol}://${process.env.VERCEL_URL}/api/kanto`)
+  const { signal } = new AbortController()
+  const res = await fetch(`${protocol}://${process.env.VERCEL_URL}/api/kanto`, { signal, cache: 'no-store' })
   const data = await res.json()
   return data
 }
