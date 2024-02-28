@@ -3,13 +3,10 @@ import { Guesses } from '@/components/Guesses'
 import { FusionImage } from '@/components/FusionImage'
 
 async function getData() {
-  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+  const url = process.env.NODE_ENV === 'production' ? 'https://fusions.vercel.app/api/kanto' : 'http://localhost:3000/api/kanto'
   // const { signal } = new AbortController()
   // this is a hack to get it to build
-
-  console.log('debugging')
-  console.log(`${protocol}://${process.env.VERCEL_URL}/api/kanto`)
-  const res = await fetch(`${protocol}://${process.env.VERCEL_URL}/api/kanto`, { cache: 'no-store' })
+  const res = await fetch(url, { cache: 'no-store' })
   const data = await res.json()
   return data
 }
