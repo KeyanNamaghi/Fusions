@@ -3,12 +3,18 @@ import { useEffect, useState } from 'react'
 import { Guesses } from '@/components/Guesses'
 import { FusionImage } from '@/components/FusionImage'
 import Image from 'next/image'
+import { Button } from './ui/button'
 
 const usePersistedState = (key, defaultValue) => {
   // Retrieve state from localStorage on initial render
   const initialState = () => {
     if (typeof window === 'undefined') return defaultValue
     const storedValue = localStorage.getItem(key)
+    const date = localStorage.getItem('date')
+    if (date !== new Date().toDateString()) {
+      localStorage.setItem('date', new Date().toDateString())
+      return defaultValue
+    }
     return storedValue ? JSON.parse(storedValue) : defaultValue
   }
 
@@ -56,25 +62,38 @@ export const Game = ({ fusions }) => {
 
   if (index === -1) {
     const correct = game.filter(Boolean).length
+    const shareText = `I scored ${correct}/5 on Pokémon Fusdle! Can you beat my score? ${window.location.href}`
+
+    const share = () =>
+      navigator.clipboard
+        .writeText(shareText)
+        .then(() => alert('Copied to clipboard: ' + shareText))
+        .catch(err => console.error('Unable to copy text to clipboard', err))
+
     return (
       <div className="flex flex-col justify-center text-center">
         <div className="flex flex-wrap justify-center">
           {fusions.map(fusion => (
-            <Image
-              src={`https://gitlab.com/pokemoninfinitefusion/customsprites/-/raw/master/CustomBattlers/${fusion.a.id}.${fusion.b.id}.png?ref_type=heads`}
-              alt="Pokémon"
-              id="pokemon-fusion"
-              className="fade-up z-50"
-              width={120}
-              height={120}
-              key={fusion.a.id + fusion.b.id}
-            />
+            <div key={fusion.a.id + fusion.b.id}>
+              <Image
+                src={`https://gitlab.com/pokemoninfinitefusion/customsprites/-/raw/master/CustomBattlers/${fusion.a.id}.${fusion.b.id}.png?ref_type=heads`}
+                alt="Pokémon"
+                id="pokemon-fusion"
+                className="fade-up z-50"
+                width={120}
+                height={120}
+              />
+              <p>{fusion.a.name}</p>
+              <span className="text-xs">+</span>
+              <p>{fusion.b.name}</p>
+            </div>
           ))}
         </div>
-        <h2 className="my-8 text-xl">You scored: {correct}/5</h2>
-
+        <h2 className="mt-8 text-xl font-bold">You scored: {correct}/5</h2>
         <p>Come back tomorrow for more!</p>
-        <button onClick={() => setGame([null, null, null, null, null])}>Restart</button>
+        <Button className="m-4" onClick={share}>
+          Share
+        </Button>
       </div>
     )
   }

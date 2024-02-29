@@ -17,7 +17,7 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center bg-[#020817] gap-2">
       <div className="flex flex-col items-center p-8 w-full  text-white text-center">
         <h1 className="text-4xl font-bold text-center mb-4">Pokémon Fusdle</h1>
-        <p>Which two Pokémon from the original 151 make this fusion?</p>
+        <p className="text-xs">What pairs of Pokémon from Kanto make these fusions?</p>
       </div>
       <Game fusions={data.fusions} />
     </main>

@@ -189,7 +189,7 @@ export async function GET() {
 
   const fusions = []
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = game * 5; i < 5 * game + 5; i++) {
     console.log(i, data[i])
     fusions.push(buildFusion(data[i]))
   }
