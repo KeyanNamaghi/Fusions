@@ -1,5 +1,4 @@
-import { readFile } from 'fs/promises'
-
+import { data } from './fusions'
 export const gameNumber = () => {
   const startDate = new Date('2024-02-28')
   const currentDate = new Date()
@@ -176,15 +175,6 @@ const buildFusion = entry => {
 }
 
 export async function GET() {
-  const filePath = './src/app/api/kanto/output.txt'
-
-  const raw = await readFile(filePath, 'utf-8')
-
-  const data = raw
-    .split('\n')
-    .map(line => line.trim())
-    .filter(Boolean)
-
   const game = gameNumber() % data.length
 
   const fusions = []
